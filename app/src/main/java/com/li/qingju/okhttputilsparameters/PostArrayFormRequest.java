@@ -20,11 +20,14 @@ import okhttp3.RequestBody;
  * Created by liqingju on 16/8/30.
  */
 public class PostArrayFormRequest extends OkHttpRequest {
-
-
-    public PostArrayFormRequest(String url, Object tag, Map<String, String> params, Map<String, String> headers) {
-        super(url, tag, params, headers);
+    protected PostArrayFormRequest(String url, Object tag, Map<String, String> params, Map<String, String> headers, int id) {
+        super(url, tag, params, headers, id);
     }
+
+
+//    public PostArrayFormRequest(String url, Object tag, Map<String, String> params, Map<String, String> headers) {
+////        super(url, tag, params, headers);
+//    }
 
     @Override
     protected RequestBody buildRequestBody() {
@@ -37,14 +40,18 @@ public class PostArrayFormRequest extends OkHttpRequest {
     @Override
     protected RequestBody wrapRequestBody(RequestBody requestBody, final Callback callback) {
         if (callback == null) return requestBody;
-        CountingRequestBody countingRequestBody = new CountingRequestBody(requestBody, new CountingRequestBody.Listener() {
+        CountingRequestBody countingRequestBody = new CountingRequestBody(requestBody, new CountingRequestBody.Listener()
+        {
             @Override
-            public void onRequestProgress(final long bytesWritten, final long contentLength) {
+            public void onRequestProgress(final long bytesWritten, final long contentLength)
+            {
 
-                OkHttpUtils.getInstance().getDelivery().post(new Runnable() {
+                OkHttpUtils.getInstance().getDelivery().execute(new Runnable()
+                {
                     @Override
-                    public void run() {
-                        callback.inProgress(bytesWritten * 1.0f / contentLength);
+                    public void run()
+                    {
+                        callback.inProgress(bytesWritten * 1.0f / contentLength,contentLength,id);
                     }
                 });
 
