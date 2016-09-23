@@ -58,7 +58,11 @@ public class PostArrayFormRequest extends OkHttpRequest {
         return builder.post(requestBody).build();
     }
 
-
+    /**
+     * 进行 参数拼接, 参数按照 map--> key1 key2 进行传递
+     *
+     * @param builder
+     */
     private void addParams(MultipartBody.Builder builder) {
         if (params != null && !params.isEmpty()) {
             for (String key : params.keySet()) {
