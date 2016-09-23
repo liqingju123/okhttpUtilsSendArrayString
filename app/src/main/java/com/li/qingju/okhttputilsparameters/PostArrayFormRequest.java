@@ -1,5 +1,7 @@
 package com.li.qingju.okhttputilsparameters;
 
+import android.util.Log;
+
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.builder.PostFormBuilder;
 import com.zhy.http.okhttp.callback.Callback;
@@ -73,6 +75,7 @@ public class PostArrayFormRequest extends OkHttpRequest {
     private void addParams(MultipartBody.Builder builder) {
         if (params != null && !params.isEmpty()) {
             for (String key : params.keySet()) {
+                Log.e("=====","=====");
                 builder.addPart(Headers.of("Content-Disposition", "form-data; name=\"" + key.replaceAll("\\[\\d+\\]", "") + "\""),
                         RequestBody.create(null, params.get(key)));
             }
