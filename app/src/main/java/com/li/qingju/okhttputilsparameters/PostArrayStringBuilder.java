@@ -20,7 +20,7 @@ public class PostArrayStringBuilder extends PostFormBuilder {
 
     @Override
     public RequestCall build() {
-        return new PostArrayFormRequest(url, tag, params, headers).build();
+        return new PostArrayFormRequest(url, tag, params, headers,id).build();
     }
 
 
